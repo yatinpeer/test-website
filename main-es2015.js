@@ -32,7 +32,7 @@ webpackEmptyAsyncContext.id = "./$$_lazy_route_resource lazy recursive";
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-header></app-header>\n<main role=\"main\">\n  <router-outlet></router-outlet>\n</main>");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-header></app-header>\n<!-- <div [hidden]=\"!loading\" class=\"loader\">\n  <h2>Loading...</h2>  \n</div> -->\n<div [hidden]=\"!loading\" class=\"progress\">\n  <div class=\"progress-bar progress-bar-striped progress-bar-animated\" role=\"progressbar\" aria-valuenow=\"75\"\n    aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 75%\"></div>\n</div>\n<main role=\"main\" [hidden]=\"loading\">\n  <router-outlet></router-outlet>\n</main>");
 
 /***/ }),
 
@@ -357,13 +357,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+
 
 
 let AppComponent = class AppComponent {
-    constructor() {
+    constructor(router) {
+        this.router = router;
         this.title = 'small-website';
+        this.loading = false;
+        this.loading = true;
+    }
+    ngAfterViewInit() {
+        this.router.events.subscribe((event) => {
+            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationStart"]) {
+                this.loading = true;
+            }
+            else if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"] || event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationCancel"]) {
+                setTimeout(() => {
+                    this.loading = false;
+                }, 500);
+            }
+        });
     }
 };
+AppComponent.ctorParameters = () => [
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
+];
 AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-root',

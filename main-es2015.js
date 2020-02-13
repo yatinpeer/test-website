@@ -376,7 +376,7 @@ let AppComponent = class AppComponent {
             else if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"] || event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationCancel"]) {
                 setTimeout(() => {
                     this.loading = false;
-                }, 500);
+                }, 200);
             }
         });
     }
